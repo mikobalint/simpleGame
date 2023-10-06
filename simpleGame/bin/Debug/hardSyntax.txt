@@ -1,0 +1,104 @@
+
+
+#sys no-option-number
+
+// komment
+
+
+#var gyufa = 0
+#var lángszóró = 1
+#var jobbZseb = "fűrész+bicska"
+#var balZseb = balZseb + "+serpenyő"
+#var kabatSzine = "sötétzöld"
+#var szakadtKabat = false
+
+#style standard1 // a stílus azonosítója
+  @Body
+    background #101010
+    foreground #000
+    image "IMG/Rooms/livingroom.png"
+    // A body tulajdonságai NEM öröklődnek az options-re, ha nem definiálod az options stílusértékeit (alapértelmezett értéken maradnak az opciók)
+  @Options
+    background #3d3d3d
+    foreground #00f
+    layout 2 // két oszlopra bontja az opciókat (tehát a második opció az első mellé kerül, nem alá) - Az alapértelmezett érték nyilván 1
+
+
+#option preWritten12 // ez az azonosítója
+    next 5 if z
+    next 6 if x
+    next 7
+    foreground #111 if xy
+    background #222 if xz
+
+
+
+
+#page 1 standard1
+Egy mező szélén állsz, előtted egy friss holttest hever.
+{$kabatSzine} ballonkabát van rajta nagy zsebekkel.{" A kabát bal zsebe ki van szakadva." if szakadtKabat else ""}
+
+
+@Ákutatod a zsebeit
+   next 2 if gyufa == 0
+   next 3 if gyufa == 1
+   background #100 if ... // Az eredeti érték felülírása, ha egy adott kondíció teljesül
+   foreground #100 if ...
+   colspan 2 if kabatSzine == "sötétzöld" // két oszlopot foglaljon az opció, ne egyet
+
+@Kilépés a játékból
+  appear if gyufa = 1 or lángszóró = 1
+  next _end
+
+
+
+
+#page 2 standard1 // használható #page 2 [standard1]-ként is (így átláthatóbb)
+Találtál egy doboz gyufát a férfi kabátzsebében.
+Inline-link: {@Katt a linkre[next 5 if z; next 6 if x; next 7;foreground #111 if xy;background #222 if xz]}
+Inline-link (ID alapján): {@@preWritten12} // fentebb definiáltam az opció paramétereit
+Ez a szöveg {\u}aláhúzott{\null}, ez {\i}dőlt betű {\0}, ez itt {\b}félkövér{}, ez pedig itt {#f00}piros színű.
+Ez {#FFC0CB if szakadtKabat else #f00}a szövegrészlet pedig rózsaszín{\0}, ha szakadt a kabátzseb és piros, ha nem.
+Az opciók is függhetnek feltételektől: {@Kabátzseb[next 6] if szakadtKabat else @Szakadt kabátzseb [next 8]}
+Speciális szimbólumok megjelenítése: \n \{szöveg\} \#hash \@ \\ 
+A @# karakterek egyébként \\ nélkül is használhatóak, ha nem a sor elején vannak.
+@Elteszem a gyufát
+    next 1
+    gyufa = 1 if gyufa == 0
+    lángszóró = gyufa if lángszóró != gyufa and gyufa in lángszóró
+
+// {\b} vagy {\bold} --> félkövér
+// {\i} vagy {\italic} --> dőlt
+// {\u} vagy {\under} --> aláhúzott
+// {\0} vagy {\null} --> visszaállítás alapértelmezettre
+// {#fff} --> szín, amely csak a {#null}-lal állítható alapértelmezettre
+// {\#fff} --> szín, amelyet a {\null} vagy {\0} is alapértelmezettre állít
+
+
+@Otthagyom a gyufát
+    next 1
+
+
+#page 3 #4d4d4d
+Már kifosztottad ezt a holttestet, nincs nála semmi.
+
+@Bassza meg, erre nem gondoltam. (Rejtett feature megnyitása)
+    next 4
+
+
+#page 4
+Ez a page az új speciális elágazásszintaxisomat használja.
+@Lássuk, működik-e
+   if kabatSzine == "sárga":
+   |> kabatSzine = "piros"
+   |> if szakadtKabat
+      ||> kabatSzine += " szakadt"
+     |2|> kabatSzine += " Még mindig szakadt!"
+
+// Tehát a szinteket jelölheted a vonalak számával és a vonalak közé írt értékkel is:
+//    - első szint: |> vagy |1|>
+//    - harmadik szint: |||> vagy |3|> ( vagy akár |03|> )
+//    - tizenkettedik szint: ||||||||||||> vagy |12|>a
+
+
+
