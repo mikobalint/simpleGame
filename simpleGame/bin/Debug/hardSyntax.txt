@@ -42,9 +42,11 @@ Egy mező szélén állsz, előtted egy friss holttest hever.
 @Ákutatod a zsebeit
    next 2 if gyufa == 0
    next 3 if gyufa == 1
-   background #100 if ... // Az eredeti érték felülírása, ha egy adott kondíció teljesül
+   background #100 if ... // Az eredeti érték felülírása, ha egy adott kondíció teljesül (lehet `background "#100"` is, meg lehet `background colorVariable` is)
    foreground #100 if ...
    colspan 2 if kabatSzine == "sötétzöld" // két oszlopot foglaljon az opció, ne egyet
+   position 1 2  // fix pozíció beállítása: az adott opció ha törik, ha szakad, minden esetben az első oszlop második sorába kerül [lehet akár változó értékét is megadni a számok helyére] (lehetséges konfiktus/probléma: ha az előtte lévő opció colspan-ja lefoglalja az adott helyet magának)
+   
 
 @Kilépés a játékból
   appear if gyufa = 1 or lángszóró = 1
@@ -94,6 +96,12 @@ Ez a page az új speciális elágazásszintaxisomat használja.
    |> if szakadtKabat
       ||> kabatSzine += " szakadt"
      |2|> kabatSzine += " Még mindig szakadt!"
+@@Separator //nagyobb távolság van itt, mint más gombok között
+@@Title: Egyéb gombok:
+@Egyéb
+    next _prev
+@Egyéb
+    next _prev
 
 // Tehát a szinteket jelölheted a vonalak számával és a vonalak közé írt értékkel is:
 //    - első szint: |> vagy |1|>
