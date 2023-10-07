@@ -12,7 +12,7 @@
 #var kabatSzine = "sötétzöld"
 #var szakadtKabat = false
 
-#style standard1 // a stílus azonosítója
+#style standard1 // a stílus azonosítója; nem lehet vele azonos nevű változót, preWritten-opciót vagy page-t létrehozni
   @Body
     background #101010
     foreground #000
@@ -30,6 +30,14 @@
     next 7
     foreground #111 if xy
     background #222 if xz
+    standard1.body.background = "#111111" if c == a  //a stílusváltozó értékei parancsokkal módosíthatók, csakúgy mint a változók, változócsoportok értékei
+    this.style.body.background = "#100" //Annak a page-nek az ideiglenes stílusát módosítja amelynek ez a preWritten opció a birtokává válik
+    
+    //Megjegyzés: Page-ek önmagukban nem birtokolhatnak maradandó stílustulajdonságokat, csak ideigleneseket (pl most is ez a parancs megváltoztatta a jelenleg aktív page háttérszínét, ha viszont később újra visszatérsz erre az oldalra a módosítások már rég a múltba vesztek volt.)
+    //Az adott page-hez tartozó stílusváltozót viszont könnyűszerrel kicserélheted egy másikra:
+    this.style = standard2
+    
+    
 
 
 
@@ -100,6 +108,8 @@ Ez a page az új speciális elágazásszintaxisomat használja.
 @@Title: Egyéb gombok:
 @Egyéb
     next _prev
+    audio ""
+    execute "https://google.com" if x == 5
 @Egyéb
     next _prev
 
