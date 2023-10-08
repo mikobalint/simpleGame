@@ -1,0 +1,10 @@
+﻿Supplementary Private Use Area-A (PUA-A): U+E0000 to U+E0FFF
+Supplementary Private Use Area-B (PUA-B): U+F0000 to U+FFFFD
+
+// Paste it into C#:
+string character = "\uF1234";
+
+
+
+
+
