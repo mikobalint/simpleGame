@@ -53,6 +53,7 @@ Egy mező szélén állsz, előtted egy friss holttest hever.
    background #100 if ... // Az eredeti érték felülírása, ha egy adott kondíció teljesül (lehet `background "#100"` is, meg lehet `background colorVariable` is)
    foreground #100 if ...
    colspan 2 if kabatSzine == "sötétzöld" // két oszlopot foglaljon az opció, ne egyet
+   rowspan 2 // két sor legyen a magassága, ne egy
    position 1 2  // fix pozíció beállítása: az adott opció ha törik, ha szakad, minden esetben az első oszlop második sorába kerül [lehet akár változó értékét is megadni a számok helyére] (lehetséges konfiktus/probléma: ha az előtte lévő opció colspan-ja lefoglalja az adott helyet magának)
    
 

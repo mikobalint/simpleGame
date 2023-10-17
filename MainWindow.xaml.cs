@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +23,14 @@ namespace simpleGame
     {
         public MainWindow()
         {
+            Debug.WriteLine(App.hideStrings("Asd\"fgh\"jkl"));
+
+
             InitializeComponent();
+
+            SysInfo.sourcePath = "beginning.txt";
+            App.processInput(SysInfo.sourcePath);
+
         }
     }
 
